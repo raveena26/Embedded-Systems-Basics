@@ -1,0 +1,26 @@
+#include<avr/io.h>
+#include<util/delay.h>
+void main()
+{
+DDRB=0XFF;
+DDRA=0XFC;
+while(1)
+{
+if(PINA==0b00000000)
+{
+PORTB=0b00000000;
+}
+else if(PINA==0b00000011)
+{
+PORTB=0b00001010;
+}
+else if(PINA=0b00000010)
+{
+PORTB=0b0000001001;
+}
+else if(PINA=0b00000001)
+{
+PORTB=0b0000000110;
+}
+}
+}
