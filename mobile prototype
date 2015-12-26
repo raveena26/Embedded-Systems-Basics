@@ -1,0 +1,355 @@
+#include<avr/io.h>
+#include<util/delay.h>
+#include<avr/lcd.h>
+void main()
+{
+DDRC=0X0F;
+DDRD=0XFF;
+DDRB=0XFF;
+DDRA=0XF0;
+PORTA=0X0F;
+lcd_init();
+int add=0x80;
+while(1)
+{
+while(1)
+{PORTB=0X00;
+PORTC=0x07;
+_delay_ms(10);
+if(PINA==0x0e)
+{break;}
+else
+{
+PORTC=0X0E;
+_delay_ms(10);
+	if(PINA==0X0E)
+	{
+		dsp_cmd(add);
+		dsp_string(".");
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0X0E)
+			{
+				dsp_cmd(add);
+				dsp_string(",");
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0X0E)
+					{
+						dsp_cmd(add);
+						dsp_num(1);
+						_delay_ms(450);
+					}
+				}
+			}
+		}add++;
+	}
+
+	if(PINA==0x0d)
+	{
+		dsp_cmd(add);
+		dsp_data('A');
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0x0d)
+			{
+				dsp_cmd(add);
+				dsp_data('B');
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0x0d)
+					{
+						dsp_cmd(add);
+						dsp_data('C');
+						_delay_ms(450);
+					}
+				}
+			}
+		}add++;
+	}
+
+	if(PINA==0x0b)
+	{
+		dsp_cmd(add);
+		dsp_data('D');
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0x0b)
+			{
+				dsp_cmd(add);
+				dsp_data('E');
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0x0b)
+					{
+						dsp_cmd(add);
+						dsp_data('F');
+						_delay_ms(450);
+					}
+				}
+			}
+		}add++;
+	}
+
+PORTC=0X0D;
+_delay_ms(10);
+	if(PINA==0X0E)
+	{
+		dsp_cmd(add);
+		dsp_string("G");
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0X0E)
+			{
+				dsp_cmd(add);
+				dsp_string("H");
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0X0E)
+					{
+						dsp_cmd(add);
+						dsp_string("I");
+						_delay_ms(450);
+					}
+				}
+			}
+		}add++;
+	}
+
+	if(PINA==0x0d)
+	{
+		dsp_cmd(add);
+		dsp_data('J');
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0x0d)
+			{
+				dsp_cmd(add);
+				dsp_data('K');
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0x0d)
+					{
+						dsp_cmd(add);
+						dsp_data('L');
+						_delay_ms(450);
+					}
+				}
+			}
+		}add++;
+	}
+
+	if(PINA==0x0b)
+	{
+		dsp_cmd(add);
+		dsp_data('M');
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0x0b)
+			{
+				dsp_cmd(add);
+				dsp_data('N');
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0x0b)
+					{
+						dsp_cmd(add);
+						dsp_data('O');
+						_delay_ms(450);
+					}
+				}
+			}
+		}add++;
+	}
+
+PORTC=0X0B;
+_delay_ms(10);
+	if(PINA==0X0E)
+	{
+		dsp_cmd(add);
+		dsp_data('P');
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0X0E)
+			{
+				dsp_cmd(add);
+				dsp_data('Q');
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0X0E)
+					{
+						dsp_cmd(add);
+						dsp_data('R');
+						_delay_ms(450);
+						for(int k=0;k<=300;k++)
+						{
+							if(PINA==0X0E)
+							{
+								dsp_cmd(add);
+								dsp_data('S');
+								_delay_ms(450);
+							}
+						}
+
+					}
+				}
+			}
+		}add++;
+	}
+
+	if(PINA==0x0d)
+	{
+		dsp_cmd(add);
+		dsp_data('T');
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0x0d)
+			{
+				dsp_cmd(add);
+				dsp_data('U');
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0x0d)
+					{
+						dsp_cmd(add);
+						dsp_data('V');
+						_delay_ms(450);
+					}
+				}
+			}
+		}add++;
+	}
+
+	if(PINA==0x0b)
+	{
+		dsp_cmd(add);
+		dsp_data('W');
+		_delay_ms(450);
+		for(int i=0;i<=300;i++)
+		{
+			if(PINA==0x0b)
+			{
+				dsp_cmd(add);
+				dsp_data('X');
+				_delay_ms(450);
+				for(int j=0;j<=300;j++)
+				{
+					if(PINA==0x0b)
+					{
+						dsp_cmd(add);
+						dsp_data('Y');
+						_delay_ms(450);
+							for(int k=0;k<=300;k++)
+							{
+								if(PINA==0x0b)
+								{
+									dsp_cmd(add);
+									dsp_data('Z');
+									_delay_ms(450);
+								}
+							}
+					}
+				}
+			}
+		}add++;
+	}
+
+}
+}
+add=0x80;
+dsp_cmd(0x01);
+_delay_ms(10);
+while(1)
+{
+PORTB=0XFF;
+PORTC=0X07;
+_delay_ms(10);
+if(PINA==0X0b)
+{break;}
+else
+{dsp_cmd(0x80);
+PORTC=0X0E;
+_delay_ms(10);
+	if(PINA==0X0E)
+	{
+		//dsp_cmd(add);
+		dsp_num(1);
+		_delay_ms(450);
+	}
+	if(PINA==0x0d)
+	{
+		//dsp_cmd(add);
+		dsp_num(2);
+		_delay_ms(450);
+	}
+	if(PINA==0x0b)
+	{
+		//dsp_cmd(add);
+		dsp_num(3);
+		_delay_ms(450);
+	}
+PORTC=0X0D;
+_delay_ms(10);
+	if(PINA==0X0E)
+	{
+		//dsp_cmd(add);
+		dsp_num(4);
+		_delay_ms(450);
+	}
+	if(PINA==0x0d)
+	{
+		//dsp_cmd(add);
+		dsp_num(5);
+		_delay_ms(450);
+	}
+	if(PINA==0x0b)
+	{
+		//dsp_cmd(add);
+		dsp_num(6);
+		_delay_ms(450);
+	}
+PORTC=0X0B;
+_delay_ms(10);
+	if(PINA==0X0E)
+	{
+		//dsp_cmd(add);
+		dsp_num(7);
+		_delay_ms(450);
+	}
+	if(PINA==0x0d)
+	{
+		//dsp_cmd(add);
+		dsp_num(8);
+		_delay_ms(450);
+	}
+	if(PINA==0x0b)
+	{
+		//dsp_cmd(add);
+		dsp_num(9);
+		_delay_ms(450);
+	}
+
+}
+}
+add=0x80;
+dsp_cmd(0x01);
+_delay_ms(10);
+}
+}
+
