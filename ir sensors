@@ -1,0 +1,24 @@
+#include<avr/io.h>
+#include<util/delay.h>
+#include<avr/lcd.h>
+void main()
+{
+DDRD=0xff;
+DDRA=0xfe;
+lcd_init();
+while(1)
+{
+if(PINA==0x01)
+{
+dsp_cmd(0x80);
+dsp_string("WHITE SURFACE");
+_delay_ms(500);
+}
+else if(PINA==0x00)
+{
+dsp_cmd(0x80);
+dsp_string("BLACK SURFACE");
+_delay_ms(500);
+}
+}
+}
