@@ -1,0 +1,62 @@
+#include<avr/io.h>
+#include<util/delay.h>
+int keypad()
+{
+while(1)
+{
+if(PINA==0X0E)
+{
+while(PINA==0X0E)
+{	}
+return 1;
+}
+if(PINA==0X0D)
+{
+while(PINA==0X0D)
+{	}
+return 2;
+}
+if(PINA==0X0B)
+{
+while(PINA==0X0B)
+{	}
+return 3;
+}
+if(PINA==0X07)
+{
+while(PINA==0X07)
+{	}
+return 4;
+}
+}
+}
+void main()
+{
+DDRB=0XFF;
+DDRA=0XF0;
+PORTA=0x0f;
+while(1)
+{
+int a=keypad();
+if(a==1)
+{
+PORTB=0b00000001;
+_delay_ms(100);
+}
+else if(a==2)
+{
+PORTB=0b00000100;
+_delay_ms(100);
+}
+else if(a==3)
+{
+PORTB=0b00000101;
+_delay_ms(100);
+}
+else if(a==4)
+{
+PORTB=0b00001010;
+_delay_ms(100);
+}
+}
+}
