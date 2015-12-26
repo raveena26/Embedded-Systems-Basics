@@ -1,0 +1,22 @@
+#include<avr/io.h>
+#include<util/delay.h>
+void main()
+{
+DDRB=0XFF;
+DDRD=0XFF;
+while(1)
+{
+PORTB=0b01111110;
+PORTD=0b10000001;
+_delay_ms(2000);
+PORTB=0b10111101;
+PORTD=0b01000010;
+_delay_ms(2000);
+PORTB=0b11011011;
+PORTD=0b00100100;
+_delay_ms(2000);
+PORTB=0b11100111;
+PORTD=0b00011000;
+_delay_ms(2000);
+}
+}
