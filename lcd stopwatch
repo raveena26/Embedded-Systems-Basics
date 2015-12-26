@@ -1,0 +1,102 @@
+#include<avr/io.h>
+#include<util/delay.h>
+#define LCDPORT PORTD
+void lcd_init()
+{
+dsp_cmd(0X02);
+dsp_cmd(0X28);
+dsp_cmd(0X0c);
+dsp_cmd(0X06);
+}
+void dsp_cmd(unsigned int cmd)
+{
+int a;
+a=cmd&0XF0;
+lcd_cmd(a);
+a=(cmd<<4)&0XF0;
+lcd_cmd(a);
+}
+void lcd_cmd(unsigned int cmd_1)
+{
+LCDPORT=cmd_1;
+LCDPORT=LCDPORT+0X04;
+_delay_ms(1);
+LCDPORT=LCDPORT-0X04;
+}
+void dsp_data(unsigned int data)
+{
+int a;
+a=(data & 0XF0);
+lcd_data(a);
+a=((data<<4) & 0XF0);
+lcd_data(a);
+}
+void lcd_data(unsigned int data_1)
+{
+LCDPORT=data_1;
+LCDPORT=LCDPORT+0X05;
+_delay_ms(1);
+LCDPORT=LCDPORT-0X04;
+}
+void dsp_string(unsigned char *str)
+{
+int i=0;
+while(str[i]!='\0')
+{
+dsp_data(str[i]);
+i++;
+}
+}
+void dsp_num(unsigned int num)
+{
+int i=0,a;
+dsp_cmd(0X04);
+while(num!=0)
+{
+a=num%10;
+dsp_data(a+48);
+num=num/10;
+}
+dsp_cmd(0X06);
+}
+//MAIN FUNCTION STARTS HERE:
+void main()
+{
+DDRD=0XFF;
+lcd_init();
+dsp_cmd(0X80);
+dsp_string("COUNTER");
+dsp_cmd(0XC0);
+dsp_string("00");
+dsp_cmd(0XC5);
+dsp_string(":");
+dsp_cmd(0XC2);
+dsp_string(":");
+dsp_cmd(0XC3);
+dsp_string("00");
+_delay_ms(100);
+while(1)
+{
+for(int k=0;k<=59;k++)
+{
+dsp_cmd(0X04);
+dsp_cmd(0XC1);
+dsp_num(k);
+_delay_ms(10);
+for(int j=0;j<=59;j++)
+{
+dsp_cmd(0X04);
+dsp_cmd(0XC4);
+dsp_num(j);
+_delay_ms(10);
+for(int i=0;i<=59;i++)
+{
+dsp_cmd(0X04);
+dsp_cmd(0XC7);
+dsp_num(i);
+_delay_ms(2);
+}
+}
+}
+}
+}
