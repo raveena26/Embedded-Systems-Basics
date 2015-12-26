@@ -1,0 +1,17 @@
+#include<avr/io.h>
+#include<util/delay.h>
+void main()
+{
+TCCR2=0X1A;
+DDRD=0XFF;
+while(1)
+{
+for(int i=30;i<=60;i++)
+{
+OCR2=i;
+_delay_ms(10);
+}
+
+
+}
+}
