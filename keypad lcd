@@ -1,0 +1,137 @@
+#include<avr/io.h>
+#include<util/delay.h>
+#define LCDPORT PORTD
+void lcd_init()
+{
+dsp_cmd(0X02);
+dsp_cmd(0X28);
+dsp_cmd(0X0c);
+dsp_cmd(0X06);
+}
+void dsp_cmd(unsigned int cmd)
+{
+int a;
+a=cmd&0XF0;
+lcd_cmd(a);
+a=(cmd<<4)&0XF0;
+lcd_cmd(a);
+}
+void lcd_cmd(unsigned int cmd_1)
+{
+LCDPORT=cmd_1;
+LCDPORT=LCDPORT+0X04;
+_delay_ms(1);
+LCDPORT=LCDPORT-0X04;
+}
+void dsp_data(unsigned int data)
+{
+int a;
+a=(data & 0XF0);
+lcd_data(a);
+a=((data<<4) & 0XF0);
+lcd_data(a);
+}
+void lcd_data(unsigned int data_1)
+{
+LCDPORT=data_1;
+LCDPORT=LCDPORT+0X05;
+_delay_ms(1);
+LCDPORT=LCDPORT-0X04;
+}
+void dsp_string(unsigned char *str)
+{
+int i=0;
+while(str[i]!='\0')
+{
+dsp_data(str[i]);
+i++;
+}
+}
+void dsp_num(unsigned int num)
+{
+int i=0,a;
+dsp_cmd(0X04);
+while(num!=0)
+{
+a=num%10;
+dsp_data(a+48);
+num=num/10;
+}
+dsp_cmd(0X06);
+}
+int keypad()
+{
+while(1)
+{
+if(PINA==0X0E)
+{
+while(PINA==0X0E)
+{	}
+return 1;
+}
+if(PINA==0X0D)
+{
+while(PINA==0X0D)
+{	}
+return 2;
+}
+if(PINA==0X0B)
+{
+while(PINA==0X0B)
+{	}
+return 3;
+}
+if(PINA==0X07)
+{
+while(PINA==0X07)
+{	}
+return 4;
+}
+}
+}
+
+
+void main()
+{
+DDRD=0XFF;
+DDRB=0XFF;
+DDRA=0XF0;
+PORTA=0X0F;
+lcd_init();
+dsp_cmd(0X85);
+while(1)
+{
+int a=keypad();
+dsp_num(a);
+_delay_ms(500);
+if(a==1)
+{
+for(int i=1,j=128;i<=8,j>=16;i=i*2,j=j/2)
+{
+PORTB=j+i;
+_delay_ms(200);
+}
+for(int i=8,j=16;i>=1,j<=128;i=i/2,j=j*2)
+{
+PORTB=i+j;
+_delay_ms(200);
+}
+}
+if(a==0)
+{
+PORTB=0;
+_delay_ms(100);
+}
+if(a==2)
+{
+for(int i=0;i<=3;i++)
+{
+PORTB=0XFF;
+_delay_ms(500);
+PORTB=0X00;
+_delay_ms(500);
+}
+}
+}
+}
+
