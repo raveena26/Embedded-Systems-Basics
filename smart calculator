@@ -1,0 +1,274 @@
+#include<avr/io.h>
+#include<util/delay.h>
+#include<avr/lcd.h>
+//KEYPAD FUNCTION
+int keypad()
+{
+while(1)
+{
+PORTC=0X0E;
+_delay_ms(10);
+{
+if(PINA==0X0E)
+{
+while( PINA==0X0E)
+{	}
+return 7;
+}
+if(PINA==0X0D)
+{
+while(PINA==0X0D)
+{	}
+return 8;
+}
+if(PINA==0X0B)
+{
+while(PINA==0X0B)
+{	}
+return 9;
+}
+if(PINA==0X07)
+{
+while(PINA==0X07)
+{	}
+return 13;
+}
+}
+PORTC=0X0D;
+_delay_ms(10);
+{
+if(PINA==0X0E)
+{
+while(PINA==0X0E)
+{	}
+return 4;
+}
+if(PINA==0X0D)
+{
+while(PINA==0X0D)
+{	}
+return 5;
+}
+if(PINA==0X0B)
+{
+while(PINA==0X0B)
+{	}
+return 6;
+}
+if(PINA==0X07)
+{
+while(PINA==0X07)
+{	}
+return 14;
+}
+}
+PORTC=0X0B;
+_delay_ms(10);
+{
+if(PINA==0X0E)
+{
+while(PINA==0X0E)
+{	}
+return 1;
+}
+if(PINA==0X0D)
+{
+while(PINA==0X0D)
+{	}
+return 2;
+}
+if(PINA==0X0B)
+{
+while(PINA==0X0B)
+{	}
+return 3;
+}
+if(PINA==0X07)
+{
+while(PINA==0X07)
+{	}
+return 15;
+}
+}
+PORTC=0X07;
+_delay_ms(10);
+{
+if(PINA==0X0E)
+{
+while(PINA==0X0E)
+{	}
+return 11;
+}
+if(PINA==0X0D)
+{
+while(PINA==0X0D)
+{	}
+return 10;
+}
+if(PINA==0X0B)
+{
+while(PINA==0X0B)
+{	}
+return 12;
+}
+if(PINA==0X07)
+{
+while(PINA==0X07)
+{	}
+return 16;
+}
+}
+
+}
+}
+
+//MAIN FUNCTION
+void main()
+{
+DDRC=0XFF;
+DDRD=0XFF;
+DDRA=0XF0;
+PORTA=0X0F;
+lcd_init();
+
+//PASSWORD CHECKING
+int a=0,b=0,c=0,d=0,e=0,f=0,g=0,h=0;
+dsp_cmd(0X80);
+dsp_string("ENTER PSWRD");
+_delay_ms(100);
+while(1)
+{
+while(g!=12)
+{
+g=keypad();
+if(g==12)
+{
+break;
+}
+else
+{
+h=h*10+g;
+dsp_cmd(0XC5);
+dsp_num(h);
+_delay_ms(500);
+}
+}
+dsp_cmd(0x01);
+_delay_ms(10);
+if(h==1234)
+{
+dsp_cmd(0x80);
+dsp_string("WELCOME");
+_delay_ms(1000);
+dsp_cmd(0x01);
+_delay_ms(10);
+
+//CALCULATOR MAIN
+dsp_cmd(0x80);
+dsp_string("enter 1st num");
+_delay_ms(100);
+
+while(a!=12)
+{
+a=keypad();
+if(a==12)
+{
+break;
+}
+else
+{
+b=b*10+a;
+dsp_cmd(0Xc5);
+dsp_num(b);
+_delay_ms(500);
+}
+}
+dsp_cmd(0x01);
+_delay_ms(10);
+dsp_cmd(0x80);
+dsp_string("enter 2nd num");
+_delay_ms(100);
+
+while(c!=12)
+{
+c=keypad();
+if(c==12)
+{
+break;
+}
+else
+{
+d=d*10+c;
+dsp_cmd(0Xc5);
+dsp_num(d);
+_delay_ms(500);
+}
+}
+dsp_cmd(0x01);
+_delay_ms(10);
+
+//calc operations
+dsp_cmd(0x80);
+dsp_string("your oprasn pls");
+_delay_ms(100);
+
+while(e!=12)
+{
+e=keypad();
+if(e==13)
+{
+f=(b+d);
+dsp_cmd(0Xc5);
+dsp_num(f);
+_delay_ms(500);
+}
+else if(e==14)
+{
+if(b>d)
+{
+f=(b-d);
+}
+else
+{
+f=(d-b);
+}
+dsp_cmd(0Xc5);
+dsp_num(f);
+_delay_ms(500);
+}
+else if(e==15)
+{
+f=(b*d);
+dsp_cmd(0Xc5);
+dsp_num(f);
+_delay_ms(500);
+}
+else if(e==16)
+{
+if(b>d)
+{
+f=(b/d);
+}
+else
+{
+dsp_num(0);
+}
+dsp_cmd(0Xc5);
+dsp_num(f); 
+_delay_ms(500);
+}
+}
+
+}
+else
+{
+dsp_cmd(0x80);
+dsp_string("Wrong Pswrd");
+_delay_ms(1000);
+}
+dsp_cmd(0x01);
+_delay_ms(10);
+
+
+}
+}
