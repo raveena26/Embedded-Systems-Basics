@@ -1,0 +1,42 @@
+#include<avr/io.h>
+#include<util/delay.h>
+#include<avr/lcd.h>
+int adc_read(unsigned int channel)
+{
+ADMUX=0X40+channel;
+ADCSRA=0XD7;
+while((ADCSRA&0X10)==0)
+{
+return ADC;
+}
+}
+void main()
+{
+DDRB=0xff;
+DDRD=0xff;
+DDRA=0xf0;
+lcd_init();
+while(1)
+{
+int a=adc_read(0);
+int b=a/3;
+if(b>30)
+{
+PORTB=0b00000001;
+PORTA=0X00;
+_delay_ms(100);
+
+}
+else if(b<30)
+{
+PORTA|=0b10000000;
+_delay_ms(100);
+}
+dsp_cmd(0X85);
+dsp_num(b);
+_delay_ms(100);
+dsp_cmd(0X88);
+dsp_string("degrees");
+_delay_ms(100);
+}
+}
