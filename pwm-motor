@@ -1,0 +1,13 @@
+#include<avr/io.h>
+#include<util/delay.h>
+void main()
+{
+TCCR0=0x69;
+DDRB=0XFF;
+while(1)
+{
+OCR0=100;
+PORTB=0X05;
+_delay_ms(10);
+}
+}
