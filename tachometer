@@ -1,0 +1,27 @@
+#include<avr/io.h>
+#include<util/delay.h>
+#include<avr/lcd.h>
+void main()
+{
+DDRB=0XFF;
+DDRD=0xff;
+DDRA=0xfc;
+lcd_init();
+int count=0;
+while(1)
+{
+if(PINA==0x01)
+{
+PORTB=0b00000001;
+_delay_ms(500);
+count++;
+dsp_cmd(0x85);
+dsp_num(count);
+_delay_ms(500);
+}
+else if(PINA==0x00)
+{
+PORTB=0b00000001;
+}
+}
+}
